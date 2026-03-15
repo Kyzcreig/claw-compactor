@@ -283,7 +283,7 @@ def main():
         out = Path(args.output_dir)
         out.mkdir(parents=True, exist_ok=True)
         for level in range(3):
-            (out / f"MEMORY-L{level}.md").write_text(
+            (out / f"memory-l{level}.md").write_text(
                 format_tier_template(result, level), encoding="utf-8"
             )
 
