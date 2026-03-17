@@ -372,9 +372,12 @@ def cmd_full(workspace: Path, args) -> int:
     except Exception as e:
         print(f"  dict: skipped ({e})")
 
-    # 5. Dedup (report only)
+    # 5. Dedup — scoped to memory/*.md only (not full workspace)
+    # dedup was designed for cross-file duplicate detection on memory files only;
+    # passing the full workspace path recurses into observations/ (800+ files) → O(n²) hang
     try:
-        dedup_result = run_dedup(str(workspace))
+        memory_path = str(workspace / "memory")
+        dedup_result = run_dedup(memory_path)
         print(f"  dedup: {dedup_result['duplicate_groups']} groups found")
     except Exception as e:
         print(f"  dedup: skipped ({e})")
